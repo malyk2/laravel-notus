@@ -16,8 +16,11 @@ mix.js('resources/js/app.js', 'public/js')
     .alias({
         '@': __dirname + '/resources/js',
         'r@': __dirname + '/resources',
-    })
-    mix;
-    if (mix.inProduction()) {
-        mix.version();
-    }
+    });
+
+mix.postCss('resources/css/app.css', 'public/css', [
+    require('tailwindcss'),
+]);
+if (mix.inProduction()) {
+    mix.version();
+}
