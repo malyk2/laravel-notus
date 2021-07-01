@@ -1,5 +1,5 @@
 import { createWebHistory, createRouter } from "vue-router";
-import Index from './Views/Index.vue'
+import Index from './views/Index.vue'
 
 const routes = [
     {
