@@ -1,0 +1,17 @@
+FROM php:7.4-apache
+
+RUN apt-get update && apt-get install -y libpq-dev libzip-dev \
+    && docker-php-ext-install pdo_pgsql zip
+
+RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
+
+RUN apt-get update && apt-get install -y git
+
+RUN curl -sL https://deb.nodesource.com/setup_12.x | bash - \
+    && apt-get install -y nodejs
+
+ADD 000-default.conf /etc/apache2/sites-enabled/000-default.conf
+RUN a2enmod rewrite && a2ensite 000-default && service apache2 restart
+
+WORKDIR /var/www/html
+
