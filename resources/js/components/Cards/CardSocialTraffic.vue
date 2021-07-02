@@ -147,11 +147,11 @@
                 <span class="mr-2">75%</span>
                 <div class="relative w-full">
                   <div
-                    class="overflow-hidden h-2 text-xs flex rounded bg-lightBlue-200"
+                    class="overflow-hidden h-2 text-xs flex rounded bg-sky-200"
                   >
                     <div
                       style="width: 75%;"
-                      class="shadow-none flex flex-col text-center whitespace-nowrap text-white justify-center bg-lightBlue-500"
+                      class="shadow-none flex flex-col text-center whitespace-nowrap text-white justify-center bg-sky-500"
                     ></div>
                   </div>
                 </div>
