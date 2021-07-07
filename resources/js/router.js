@@ -7,8 +7,8 @@ import Settings from './views/admin/Settings.vue'
 import Tables from './views/admin/Tables.vue'
 import Maps from './views/admin/Maps.vue'
 // Auth
-import Login from './views/auth/Login.vue'
-import Register from './views/auth/Register.vue'
+import Login from './views/admin/Login.vue'
+// import Register from './views/auth/Register.vue'
 // Index
 import Landing from "@/views/Landing.vue";
 import Profile from "@/views/Profile.vue";
@@ -40,22 +40,26 @@ const routes = [
         path: "/admin/maps",
         component: Maps,
       },
+      // {
+      //   path: "/admin/login",
+      //   component: Login,
+      // },
     ],
 
   },
   {
-    path: "/auth",
-    redirect: "/auth/login",
+    path: "/admin",
+    // redirect: "/admin/login",
     component: Auth,
     children: [
       {
-        path: "/auth/login",
+        path: "/admin/login",
         component: Login,
       },
-      {
-        path: "/auth/register",
-        component: Register,
-      },
+      // {
+      //   path: "/auth/register",
+      //   component: Register,
+      // },
     ],
   },
   {
