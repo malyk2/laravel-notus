@@ -204,6 +204,7 @@
                     duration-150
                   "
                   type="button"
+                  @click="login"
                 >
                   Sign In
                 </button>
@@ -230,6 +231,7 @@
 <script>
 import github from "r@/assets/img/github.svg";
 import google from "r@/assets/img/google.svg";
+import {mapActions} from "vuex";
 
 export default {
   data() {
@@ -237,6 +239,14 @@ export default {
       github,
       google,
     };
+  },
+
+  computed: {},
+  methods: {
+    ...mapActions("auth", [
+      "login", // -> this.foo()
+      // 'bar' // -> this.bar()
+    ]),
   },
 };
 </script>

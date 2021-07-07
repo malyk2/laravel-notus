@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Arr;
 use App\Models\User;
+use App\Exceptions\Api\Auth\InvalidCredentailsException;
 
 class AuthService
 {
@@ -16,7 +17,7 @@ class AuthService
             !$localUser
             || !Hash::check(Arr::get($credentails, 'email'), $localUser->password)
         ) {
-            dd('not found');
+            throw new InvalidCredentailsException();
         }
         Auth::login($localUser, $rememberMe);
 
