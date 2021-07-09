@@ -15,7 +15,7 @@ class AuthService
         $localUser = User::where('email', strtolower(Arr::get($credentails, 'email')))->first();
         if (
             !$localUser
-            || !Hash::check(Arr::get($credentails, 'email'), $localUser->password)
+            || !Hash::check(Arr::get($credentails, 'password'), $localUser->password)
         ) {
             throw new InvalidCredentailsException();
         }

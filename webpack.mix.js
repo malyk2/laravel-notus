@@ -22,9 +22,9 @@ mix.postCss('resources/css/app.css', 'public/css', [
     require('tailwindcss'),
 ]);
 
-mix.browserSync({
-  proxy: 'localhost'
-});
+// mix.browserSync({
+//   proxy: 'localhost'
+// });
 if (mix.inProduction()) {
     mix.version();
 }

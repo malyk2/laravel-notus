@@ -15,16 +15,12 @@ const getters = {
 
 };
 const actions = {
-  login({ commit }) {
-    // console.log('action login');
-    commit('setMe', {foo:'bar'});
-    api.login({name:"Some name"}).then(response => {
+  async login({ commit }, formData) {
+    await api.login(formData).then(response => {
       console.log('success');
       console.log(response);
     }).catch(errors => {
-      console.log('errors');
-      console.log(errors);
-
+      throw errors.data
     })
   }
   // async checkout({ commit, state }, products) {

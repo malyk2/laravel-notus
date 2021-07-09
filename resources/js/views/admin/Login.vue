@@ -20,6 +20,7 @@
             <div class="text-center mb-3">
               <h6 class="text-blueGray-500 text-sm font-bold">Sign in with</h6>
             </div>
+            <alert v-if="mainErrorMessage" type="danger">{{ mainErrorMessage }}</alert>
             <div class="btn-wrapper text-center">
               <button
                 class="
@@ -118,6 +119,7 @@
                     duration-150
                   "
                   placeholder="Email"
+                  v-model="form.email"
                 />
               </div>
 
@@ -154,6 +156,7 @@
                     duration-150
                   "
                   placeholder="Password"
+                  v-model="form.password"
                 />
               </div>
               <div>
@@ -173,6 +176,7 @@
                       transition-all
                       duration-150
                     "
+                    v-model="form.rememberMe"
                   />
                   <span class="ml-2 text-sm font-semibold text-blueGray-600">
                     Remember me
@@ -204,7 +208,7 @@
                     duration-150
                   "
                   type="button"
-                  @click="login"
+                  @click="signIn"
                 >
                   Sign In
                 </button>
@@ -229,24 +233,52 @@
   </div>
 </template>
 <script>
+import {mapActions} from "vuex";
 import github from "r@/assets/img/github.svg";
 import google from "r@/assets/img/google.svg";
-import {mapActions} from "vuex";
-
+import Form from '@/libs/Form'
+import Alert from '@/components/Alerts/Alert'
 export default {
+  components: {
+    Alert,
+  },
   data() {
     return {
+      form: new Form({
+        email:'admin@email.com',
+        password:'secretQQ',
+        rememberMe:false,
+      }),
+      mainErrorMessage:null,
       github,
       google,
+
     };
   },
-
+  mounted() {
+    // let f = new Form({
+    //   email:'admin@email.com',
+    //   password:'secretQQ',
+    //   rememberMe:false,
+    // })
+    // console.log(f);
+  },
   computed: {},
   methods: {
     ...mapActions("auth", [
-      "login", // -> this.foo()
-      // 'bar' // -> this.bar()
+      "login",
     ]),
+    signIn() {
+      this.mainErrorMessage = null;
+      this.login(this.form.data()).then(data => {
+        console.log('SUccess on comp');
+        console.log(data);
+      }).catch(data => {
+        this.mainErrorMessage = data.message;
+
+      });
+    },
   },
+
 };
 </script>
