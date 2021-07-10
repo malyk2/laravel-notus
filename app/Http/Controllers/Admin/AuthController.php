@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use Illuminate\Http\Request;
 use App\Services\AuthService;
 use App\Http\Controllers\Controller;
+use App\Http\Resources\Auth\Me as MeResource;
 
 class AuthController extends Controller
 {
@@ -18,7 +19,7 @@ class AuthController extends Controller
     public function login(Request $request)
     {
         if ($user = $this->authService->login($request->all())) {
-            return $user;
+            return response()->success(new MeResource($user));
         }
         return response(true, 400);
     }

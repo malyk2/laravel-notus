@@ -20,7 +20,9 @@
             <div class="text-center mb-3">
               <h6 class="text-blueGray-500 text-sm font-bold">Sign in with</h6>
             </div>
-            <alert v-if="mainErrorMessage" type="danger">{{ mainErrorMessage }}</alert>
+            <alert v-if="message.show" :type="message.type">
+              {{ message.text }}
+            </alert>
             <div class="btn-wrapper text-center">
               <button
                 class="
@@ -233,11 +235,11 @@
   </div>
 </template>
 <script>
-import {mapActions} from "vuex";
+import { mapActions, mapState } from "vuex";
 import github from "r@/assets/img/github.svg";
 import google from "r@/assets/img/google.svg";
-import Form from '@/libs/Form'
-import Alert from '@/components/Alerts/Alert'
+import Form from "@/libs/Form";
+import Alert from "@/components/Alerts/Alert";
 export default {
   components: {
     Alert,
@@ -245,14 +247,13 @@ export default {
   data() {
     return {
       form: new Form({
-        email:'admin@email.com',
-        password:'secretQQ',
-        rememberMe:false,
+        email: "admin@email.com",
+        password: "secret",
+        rememberMe: false,
       }),
-      mainErrorMessage:null,
+      mainErrorMessage: null,
       github,
       google,
-
     };
   },
   mounted() {
@@ -263,22 +264,24 @@ export default {
     // })
     // console.log(f);
   },
-  computed: {},
+  computed: {
+    ...mapState({
+      message: (state) => state.auth.message,
+    }),
+  },
   methods: {
-    ...mapActions("auth", [
-      "login",
-    ]),
+    ...mapActions("auth", ["login"]),
     signIn() {
       this.mainErrorMessage = null;
-      this.login(this.form.data()).then(data => {
-        console.log('SUccess on comp');
-        console.log(data);
-      }).catch(data => {
-        this.mainErrorMessage = data.message;
-
-      });
+      this.login(this.form.data())
+        .then((data) => {
+          // console.log("SUccess on comp");
+          // console.log(data);
+        })
+        .catch((data) => {
+          // this.mainErrorMessage = data.message;
+        });
     },
   },
-
 };
 </script>

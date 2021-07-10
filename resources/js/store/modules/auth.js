@@ -1,14 +1,12 @@
-// import { createStore } from "vuex";
 import { auth as api } from '@/api'
 
-
-// const modules = {
-//   auth: {
-
-//   }
-// }
 const state = () => ({
   me: {},
+  message: {
+    text: '',
+    type: 'success',
+    show: false,
+  }
 })
 
 const getters = {
@@ -16,34 +14,28 @@ const getters = {
 };
 const actions = {
   async login({ commit }, formData) {
+    commit('setMessage', {
+      show: false,
+    })
     await api.login(formData).then(response => {
-      console.log('success');
-      console.log(response);
-    }).catch(errors => {
-      throw errors.data
+      commit('setMe', response.data)
+    }).catch(response => {
+      commit('setMessage', {
+        show: true,
+        text: response.data.message,
+        type: 'danger',
+      })
+      throw response.data
+
     })
   }
-  // async checkout({ commit, state }, products) {
-  //   const savedCartItems = [...state.items]
-  //   commit('setCheckoutStatus', null)
-  //   // empty cart
-  //   commit('setCartItems', { items: [] })
-  //   try {
-  //     await shop.buyProducts(products)
-  //     commit('setCheckoutStatus', 'successful')
-  //   } catch (e) {
-  //     console.error(e)
-  //     commit('setCheckoutStatus', 'failed')
-  //     // rollback to the cart saved before sending the request
-  //     commit('setCartItems', { items: savedCartItems })
-  //   }
-  // }
 };
 const mutations = {
-  setMe (state, userData) {
-    console.log('mutation setMe');
-    console.log(userData);
+  setMe(state, userData) {
     state.me = userData;
+  },
+  setMessage(state, message) {
+    state.message = message;
   }
 
 }
@@ -53,9 +45,6 @@ export default {
   getters,
   actions,
   mutations,
-  // modules: {
-  //   nested
-  // }
 }
 
 
