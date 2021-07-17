@@ -87,7 +87,7 @@
             <div class="text-blueGray-400 text-center mb-3 font-bold">
               <small>Or sign in with credentials</small>
             </div>
-            <form>
+            <form @submit.prevent="signIn">
               <div class="relative w-full mb-3">
                 <label
                   class="
@@ -104,7 +104,6 @@
                 <input
                   type="email"
                   class="
-                    border-0
                     px-3
                     py-3
                     placeholder-blueGray-300
@@ -120,9 +119,15 @@
                     transition-all
                     duration-150
                   "
+                  :class="[
+                    form.errors.has('email') ? 'border-red-500' : 'border-none',
+                  ]"
                   placeholder="Email"
                   v-model="form.email"
                 />
+                <p v-if="form.errors.has('email')" class="text-red-500 text-xs">
+                  {{ form.errors.first("email") }}
+                </p>
               </div>
 
               <div class="relative w-full mb-3">
@@ -141,7 +146,6 @@
                 <input
                   type="password"
                   class="
-                    border-0
                     px-3
                     py-3
                     placeholder-blueGray-300
@@ -157,9 +161,20 @@
                     transition-all
                     duration-150
                   "
+                  :class="[
+                    form.errors.has('password')
+                      ? 'border-red-500'
+                      : 'border-none',
+                  ]"
                   placeholder="Password"
                   v-model="form.password"
                 />
+                <p
+                  v-if="form.errors.has('password')"
+                  class="text-red-500 text-xs"
+                >
+                  {{ form.errors.first("password") }}
+                </p>
               </div>
               <div>
                 <label class="inline-flex items-center cursor-pointer">
@@ -178,7 +193,7 @@
                       transition-all
                       duration-150
                     "
-                    v-model="form.rememberMe"
+                    v-model="form.remember_me"
                   />
                   <span class="ml-2 text-sm font-semibold text-blueGray-600">
                     Remember me
@@ -209,8 +224,8 @@
                     transition-all
                     duration-150
                   "
-                  type="button"
-                  @click="signIn"
+                  type="submit"
+                  :disabled="form.busy"
                 >
                   Sign In
                 </button>
@@ -235,7 +250,7 @@
   </div>
 </template>
 <script>
-import { mapActions, mapState } from "vuex";
+import { mapActions, mapMutations, mapState } from "vuex";
 import github from "r@/assets/img/github.svg";
 import google from "r@/assets/img/google.svg";
 import Form from "@/libs/Form";
@@ -248,38 +263,45 @@ export default {
     return {
       form: new Form({
         email: "admin@email.com",
-        password: "secret",
-        rememberMe: false,
+        // password: "secret",
+        password: "",
+        remember_me: false,
       }),
-      mainErrorMessage: null,
       github,
       google,
     };
   },
-  mounted() {
-    // let f = new Form({
-    //   email:'admin@email.com',
-    //   password:'secretQQ',
-    //   rememberMe:false,
-    // })
-    // console.log(f);
-  },
+  mounted() {},
   computed: {
     ...mapState({
       message: (state) => state.auth.message,
     }),
   },
   methods: {
+    ...mapMutations("auth", ["setMessage"]),
     ...mapActions("auth", ["login"]),
     signIn() {
       this.mainErrorMessage = null;
+      this.form.errors.clear();
+      this.form.busy = true;
       this.login(this.form.data())
         .then((data) => {
-          // console.log("SUccess on comp");
-          // console.log(data);
+          this.form.onSuccess();
+          // this.$router.push("/admin/dashboard");
         })
-        .catch((data) => {
-          // this.mainErrorMessage = data.message;
+        .catch((response) => {
+          this.form.onFail(response.data.errors);
+          if (response.status == 422) {
+            this.setMessage({
+              show: false,
+            });
+          } else {
+            this.setMessage({
+              show: true,
+              text: response.data.message,
+              type: "danger",
+            });
+          }
         });
     },
   },

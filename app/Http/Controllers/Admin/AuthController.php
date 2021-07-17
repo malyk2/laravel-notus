@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use Illuminate\Support\Arr;
 use Illuminate\Http\Request;
 use App\Services\AuthService;
 use App\Http\Controllers\Controller;
@@ -19,7 +20,12 @@ class AuthController extends Controller
 
     public function login(LoginRequest $request)
     {
-        if ($user = $this->authService->login($request->validated())) {
+        $data = $request->validated();
+        logger($data);
+        if ($user = $this->authService->login(
+            Arr::only($data, ['email', 'password']),
+            Arr::get($data, 'remember_me', false)
+        )) {
             return response()->success(new MeResource($user));
         }
         return response(true, 400);

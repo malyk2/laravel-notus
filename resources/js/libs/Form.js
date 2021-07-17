@@ -15,6 +15,7 @@ class Form {
     }
 
     this.errors = new Errors();
+    this.busy = false;
   }
 
 
@@ -130,6 +131,7 @@ class Form {
    * @param {object} data
    */
   onSuccess(data) {
+    this.busy = false;
     this.reset();
   }
 
@@ -140,6 +142,7 @@ class Form {
    * @param {object} errors
    */
   onFail(errors) {
+    this.busy = false;
     this.errors.record(errors);
   }
 }

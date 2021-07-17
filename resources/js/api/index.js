@@ -6,6 +6,9 @@ const auth = {
       "/api/auth/login"
     );
   },
+  getMe() {
+    return new Request().get("/api/auth/me");
+  },
 }
 
 export {
