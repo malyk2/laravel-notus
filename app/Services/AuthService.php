@@ -10,6 +10,14 @@ use App\Exceptions\Api\Auth\InvalidCredentailsException;
 
 class AuthService
 {
+    /**
+     * Login user
+     *
+     * @param array $credentails
+     * @param boolean $rememberMe
+     * @throws InvalidCredentailsException
+     * @return User
+     */
     public function login(array $credentails, bool $rememberMe = false)
     {
         $localUser = User::where('email', strtolower(Arr::get($credentails, 'email')))->first();
