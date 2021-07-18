@@ -13,6 +13,11 @@ import Login from './views/admin/Login.vue'
 import Landing from "@/views/Landing.vue";
 import Profile from "@/views/Profile.vue";
 import Index from './views/Index.vue'
+// middlewares
+// import { Auth as AuthMiddleware } from '@/middlewares/Auth'
+import AuthMiddleware from '@/middlewares/AuthMiddleware'
+
+
 
 const routes = [
   {
@@ -27,6 +32,7 @@ const routes = [
       {
         path: "/admin/dashboard",
         component: Dashboard,
+        meta: { middleware: [new AuthMiddleware()] },
       },
       {
         path: "/admin/settings",
@@ -54,6 +60,7 @@ const routes = [
     children: [
       {
         path: "/admin/login",
+        name: 'admin.login',
         component: Login,
       },
       // {
@@ -72,7 +79,23 @@ const routes = [
   },
 ]
 
-export default createRouter({
+const router = createRouter({
   history: createWebHistory(),
   routes,
 });
+
+router.beforeEach(async (to, from, next) => {
+  if (to.meta.middleware) {
+    let result;
+    for (const middleware of to.meta.middleware) {
+      result = await middleware.handle(to, from, next)
+      if (result !== true) {
+        return result
+      }
+    }
+    return next();
+  } else next();
+})
+
+
+export default router

@@ -262,8 +262,7 @@ export default {
   data() {
     return {
       form: new Form({
-        email: "admin@email.com",
-        // password: "secret",
+        email: "",
         password: "",
         remember_me: false,
       }),
@@ -287,7 +286,7 @@ export default {
       this.login(this.form.data())
         .then((data) => {
           this.form.onSuccess();
-          // this.$router.push("/admin/dashboard");
+          this.$router.push("/admin/dashboard");
         })
         .catch((response) => {
           this.form.onFail(response.data.errors);

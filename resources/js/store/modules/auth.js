@@ -20,24 +20,15 @@ const actions = {
     await api.login(formData).then(response => {
       commit('setMe', response.data)
     }).catch(response => {
-      // commit('setMessage', {
-      //   show: true,
-      //   text: response.data.message,
-      //   type: 'danger',
-      // })
       throw response
-
     })
   },
   async getMe({ commit }) {
-    // commit('setMessage', {
-    //   show: false,
-    // })
+    console.log('ACTION getMe');
     await api.getMe().then(response => {
       commit('setMe', response.data)
     }).catch(response => {
-      throw response.data
-
+      throw response
     })
   }
 };
