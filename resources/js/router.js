@@ -14,10 +14,7 @@ import Landing from "@/views/Landing.vue";
 import Profile from "@/views/Profile.vue";
 import Index from './views/Index.vue'
 // middlewares
-// import { Auth as AuthMiddleware } from '@/middlewares/Auth'
-import AuthMiddleware from '@/middlewares/AuthMiddleware'
-
-
+import { Auth as AuthMiddleware } from '@/middlewares/Auth'
 
 const routes = [
   {
