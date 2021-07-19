@@ -25,7 +25,7 @@ class AuthController extends Controller
             Arr::only($data, ['email', 'password']),
             Arr::get($data, 'remember_me', false)
         )) {
-            return response(true, 400);
+            return response([], 400);
         }
         return response()->success(new MeResource($user));
     }
