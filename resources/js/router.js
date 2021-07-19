@@ -28,6 +28,7 @@ const routes = [
     children: [
       {
         path: "/admin/dashboard",
+        name: "admin.dashboard",
         component: Dashboard,
         meta: { middleware: [new AuthMiddleware()] },
       },

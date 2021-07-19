@@ -21,14 +21,13 @@ class AuthController extends Controller
     public function login(LoginRequest $request)
     {
         $data = $request->validated();
-        logger($data);
-        if ($user = $this->authService->login(
+        if (!$user = $this->authService->login(
             Arr::only($data, ['email', 'password']),
             Arr::get($data, 'remember_me', false)
         )) {
-            return response()->success(new MeResource($user));
+            return response(true, 400);
         }
-        return response(true, 400);
+        return response()->success(new MeResource($user));
     }
 
     public function me(Request $request)

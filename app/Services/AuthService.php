@@ -27,8 +27,6 @@ class AuthService
         ) {
             throw new InvalidCredentailsException();
         }
-        logger('$rememberMe');
-        logger($rememberMe);
         Auth::login($localUser, $rememberMe);
 
         return $localUser;
