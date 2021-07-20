@@ -6,9 +6,12 @@ use App\Models\User;
 use Tests\Http\TestCase;
 use Mockery\MockInterface;
 use App\Services\AuthService;
+use Illuminate\Foundation\Testing\RefreshDatabase;
 
 class LoginTest extends TestCase
 {
+    use RefreshDatabase;
+
     protected $uri = 'api/auth/login';
 
     protected $method = 'POST';
