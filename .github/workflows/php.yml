@@ -1,10 +1,10 @@
 name: Packages && tests
 
 on:
-  # push:
-  #   branches: [air]
+  push:
+    branches: [master, dev, release/*]
   pull_request:
-    branches: [release/*]
+    branches: [master, dev, release/*]
 
 jobs:
   build:
