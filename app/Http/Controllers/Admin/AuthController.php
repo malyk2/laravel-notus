@@ -6,8 +6,10 @@ use Illuminate\Support\Arr;
 use Illuminate\Http\Request;
 use App\Services\AuthService;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Password;
 use App\Http\Resources\Auth\Me as MeResource;
 use App\Http\Requests\Auth\Login as LoginRequest;
+use App\Http\Requests\Auth\PasswordForgot as PasswordForgotRequest;
 
 class AuthController extends Controller
 {
@@ -27,7 +29,16 @@ class AuthController extends Controller
         )) {
             return response([], 400);
         }
-        return response()->success(new MeResource($user));
+        return response()->api(new MeResource($user));
+    }
+
+    public function forgot(PasswordForgotRequest $request)
+    {
+        $status = Password::sendResetLink(['email' => $request->email]);
+
+        return $status === Password::RESET_LINK_SENT
+            ? response()->api(true, $status)
+            : response()->api(false, $status, 403);
     }
 
     public function me(Request $request)

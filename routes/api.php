@@ -17,6 +17,9 @@ use App\Http\Controllers\Admin\AuthController;
 
 Route::prefix('auth')->group(function () {
     Route::post('login', [AuthController::class, 'login']);
+    Route::prefix('password')->middleware('guest')->group(function () {
+        Route::post('forgot', [AuthController::class, 'forgot']);
+    });
     Route::middleware('auth:sanctum')->group(function () {
         Route::get('me', [AuthController::class, 'me']);
     });
