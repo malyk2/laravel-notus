@@ -7,12 +7,14 @@ import Settings from './views/admin/Settings.vue'
 import Tables from './views/admin/Tables.vue'
 import Maps from './views/admin/Maps.vue'
 // Auth
-import Login from './views/auth/Login.vue'
-import Register from './views/auth/Register.vue'
+import Login from './views/admin/Login.vue'
+// import Register from './views/auth/Register.vue'
 // Index
 import Landing from "@/views/Landing.vue";
 import Profile from "@/views/Profile.vue";
 import Index from './views/Index.vue'
+// middlewares
+import { Auth as AuthMiddleware } from '@/middlewares/Auth'
 
 const routes = [
   {
@@ -26,7 +28,9 @@ const routes = [
     children: [
       {
         path: "/admin/dashboard",
+        name: "admin.dashboard",
         component: Dashboard,
+        meta: { middleware: [new AuthMiddleware()] },
       },
       {
         path: "/admin/settings",
@@ -40,22 +44,27 @@ const routes = [
         path: "/admin/maps",
         component: Maps,
       },
+      // {
+      //   path: "/admin/login",
+      //   component: Login,
+      // },
     ],
 
   },
   {
-    path: "/auth",
-    redirect: "/auth/login",
+    path: "/admin",
+    // redirect: "/admin/login",
     component: Auth,
     children: [
       {
-        path: "/auth/login",
+        path: "/admin/login",
+        name: 'admin.login',
         component: Login,
       },
-      {
-        path: "/auth/register",
-        component: Register,
-      },
+      // {
+      //   path: "/auth/register",
+      //   component: Register,
+      // },
     ],
   },
   {
@@ -68,7 +77,23 @@ const routes = [
   },
 ]
 
-export default createRouter({
+const router = createRouter({
   history: createWebHistory(),
   routes,
 });
+
+router.beforeEach(async (to, from, next) => {
+  if (to.meta.middleware) {
+    let result;
+    for (const middleware of to.meta.middleware) {
+      result = await middleware.handle(to, from, next)
+      if (result !== true) {
+        return result
+      }
+    }
+    return next();
+  } else next();
+})
+
+
+export default router
