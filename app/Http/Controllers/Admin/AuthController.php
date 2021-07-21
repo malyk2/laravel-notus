@@ -32,7 +32,7 @@ class AuthController extends Controller
         return response()->api(new MeResource($user));
     }
 
-    public function forgot(PasswordForgotRequest $request)
+    public function passwordForgot(PasswordForgotRequest $request)
     {
         $status = Password::sendResetLink(['email' => $request->email]);
 
