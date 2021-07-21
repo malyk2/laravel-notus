@@ -143,7 +143,10 @@ class Form {
    */
   onFail(errors) {
     this.busy = false;
-    this.errors.record(errors);
+    if (errors) {
+      this.errors.record(errors);
+    }
+
   }
 }
 
