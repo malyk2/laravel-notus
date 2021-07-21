@@ -7,7 +7,9 @@ import Settings from './views/admin/Settings.vue'
 import Tables from './views/admin/Tables.vue'
 import Maps from './views/admin/Maps.vue'
 // Auth
-import Login from './views/admin/Login.vue'
+import Login from './views/auth/Login.vue'
+import PasswordForgot from './views/auth/PasswordForgot.vue'
+import PasswordReset from './views/auth/PasswordReset.vue'
 // import Register from './views/auth/Register.vue'
 // Index
 import Landing from "@/views/Landing.vue";
@@ -60,6 +62,16 @@ const routes = [
         path: "/admin/login",
         name: 'admin.login',
         component: Login,
+      },
+      {
+        path: "/admin/forgot-password",
+        name: 'admin.password.forgot',
+        component: PasswordForgot,
+      },
+      {
+        path: "/admin/reset-password",
+        name: 'admin.password.reset',
+        component: PasswordReset,
       },
       // {
       //   path: "/auth/register",

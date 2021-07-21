@@ -235,9 +235,12 @@
         </div>
         <div class="flex flex-wrap mt-6 relative">
           <div class="w-1/2">
-            <a href="javascript:void(0)" class="text-blueGray-200">
+            <router-link
+              :to="{ name: 'admin.password.forgot' }"
+              class="text-blueGray-200"
+            >
               <small>Forgot password?</small>
-            </a>
+            </router-link>
           </div>
           <div class="w-1/2 text-right">
             <router-link to="/auth/register" class="text-blueGray-200">

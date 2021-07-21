@@ -7,6 +7,12 @@ const auth = {
   getMe() {
     return new Request().get("/api/auth/me");
   },
+  forgotPassword(data) {
+    return new Request(data).post("/api/auth/password/forgot");
+  },
+  resetPassword(data) {
+    return new Request(data).post("/api/auth/password/reset");
+  }
 }
 
 export {
