@@ -4,16 +4,17 @@ namespace Tests\Http\Auth;
 
 use App\Models\User;
 use Tests\Http\TestCase;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Password;
 use Illuminate\Support\Facades\Notification;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use App\Notifications\Auth\ResetPassword as ResetPasswordNotification;
 
-class PasswordForgotTest extends TestCase
+class PasswordResetTest extends TestCase
 {
     use RefreshDatabase;
 
-    protected $uri = 'api/auth/password/forgot';
+    protected $uri = 'api/auth/password/reset';
 
     protected $method = 'POST';
 
@@ -32,8 +33,11 @@ class PasswordForgotTest extends TestCase
     public function getNotValidData()
     {
         return [
-            ['required email' => []],
-            ['email email' => ['email' => 'not email']],
+            ['required email' => ['token' => 'some token', 'password' => 'pass', 'password_confirmation' => 'pass',]],
+            ['email email' => ['email' => 'not email', 'token' => 'some token', 'password' => 'pass', 'password_confirmation' => 'pass',]],
+            ['required token' => ['email' => 'some@email.com', 'password' => 'pass', 'password_confirmation' => 'pass',]],
+            ['required password' => ['email' => 'some@email.com', 'token' => 'some token']],
+            ['confirmed password' => ['email' => 'some@email.com', 'token' => 'some token', 'password' => 'pass', 'password_confirmation' => 'not pass',]],
         ];
     }
 
@@ -45,21 +49,21 @@ class PasswordForgotTest extends TestCase
      */
     public function error($error)
     {
-        Notification::fake();
-        Password::shouldReceive('sendResetLink')->once()->with(['email' => 'some@email.com'])->andReturn($error);
+        Password::shouldReceive('reset')->once()->andReturn($error);
 
         $response = $this->send([
             'email' => 'some@email.com',
+            'token' => 'some token',
+            'password' => 'new password',
+            'password_confirmation' => 'new password',
         ]);
 
         $response->assertStatus(403);
-        Notification::assertNothingSent();
     }
 
     public function getPasswordErrors()
     {
         return [
-            [Password::PASSWORD_RESET],
             [Password::INVALID_USER],
             [Password::INVALID_TOKEN],
             [Password::RESET_THROTTLED],
@@ -73,17 +77,15 @@ class PasswordForgotTest extends TestCase
      */
     public function success()
     {
-        Notification::fake();
-        $user = User::factory()->create(['email' => 'some@email.com']);
+        Password::shouldReceive('reset')->once()->andReturn(Password::PASSWORD_RESET);
 
         $response = $this->send([
             'email' => 'some@email.com',
+            'token' => 'some token',
+            'password' => 'new password',
+            'password_confirmation' => 'new password',
         ]);
 
         $response->assertStatus(200);
-        Notification::assertSentTo(
-            [$user],
-            ResetPasswordNotification::class
-        );
     }
 }
