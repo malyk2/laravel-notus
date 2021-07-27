@@ -243,7 +243,10 @@
             </router-link>
           </div>
           <div class="w-1/2 text-right">
-            <router-link to="/auth/register" class="text-blueGray-200">
+            <router-link
+              :to="{ name: 'admin.register' }"
+              class="text-blueGray-200"
+            >
               <small>Create new account</small>
             </router-link>
           </div>
@@ -283,7 +286,6 @@ export default {
     ...mapMutations("auth", ["setMessage"]),
     ...mapActions("auth", ["login"]),
     signIn() {
-      this.mainErrorMessage = null;
       this.form.errors.clear();
       this.form.busy = true;
       this.login(this.form.data())
