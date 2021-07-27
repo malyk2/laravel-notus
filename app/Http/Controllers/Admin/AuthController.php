@@ -7,6 +7,7 @@ use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use App\Services\AuthService;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Password;
 use App\Http\Resources\Auth\Me as MeResource;
 use App\Http\Requests\Auth\Login as LoginRequest;
@@ -32,6 +33,12 @@ class AuthController extends Controller
             return response([], 400);
         }
         return response()->api(new MeResource($user));
+    }
+
+    public function logout(Request $request)
+    {
+        Auth::logout();
+        return response()->api(true);
     }
 
     public function passwordForgot(PasswordForgotRequest $request)
