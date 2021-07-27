@@ -4,6 +4,9 @@ const auth = {
   login(data) {
     return new Request(data).post("/api/auth/login");
   },
+  logout() {
+    return new Request().post("/api/auth/logout");
+  },
   getMe() {
     return new Request().get("/api/auth/me");
   },

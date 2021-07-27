@@ -8,7 +8,16 @@
     >
       <div class="items-center flex">
         <span
-          class="w-12 h-12 text-sm text-white bg-blueGray-200 inline-flex items-center justify-center rounded-full"
+          class="
+            w-12
+            h-12
+            text-sm text-white
+            bg-blueGray-200
+            inline-flex
+            items-center
+            justify-center
+            rounded-full
+          "
         >
           <img
             alt="..."
@@ -20,7 +29,18 @@
     </a>
     <div
       ref="popoverDropdownRef"
-      class="bg-white text-base z-50 float-left py-2 list-none text-left rounded shadow-lg min-w-48"
+      class="
+        bg-white
+        text-base
+        z-50
+        float-left
+        py-2
+        list-none
+        text-left
+        rounded
+        shadow-lg
+        min-w-48
+      "
       v-bind:class="{
         hidden: !dropdownPopoverShow,
         block: dropdownPopoverShow,
@@ -28,28 +48,85 @@
     >
       <a
         href="javascript:void(0);"
-        class="text-sm py-2 px-4 font-normal block w-full whitespace-nowrap bg-transparent text-blueGray-700"
+        class="
+          text-sm
+          py-2
+          px-4
+          font-normal
+          block
+          w-full
+          whitespace-nowrap
+          bg-transparent
+          text-blueGray-700
+        "
       >
         Action
       </a>
       <a
         href="javascript:void(0);"
-        class="text-sm py-2 px-4 font-normal block w-full whitespace-nowrap bg-transparent text-blueGray-700"
+        class="
+          text-sm
+          py-2
+          px-4
+          font-normal
+          block
+          w-full
+          whitespace-nowrap
+          bg-transparent
+          text-blueGray-700
+        "
       >
         Another action
       </a>
       <a
         href="javascript:void(0);"
-        class="text-sm py-2 px-4 font-normal block w-full whitespace-nowrap bg-transparent text-blueGray-700"
+        class="
+          text-sm
+          py-2
+          px-4
+          font-normal
+          block
+          w-full
+          whitespace-nowrap
+          bg-transparent
+          text-blueGray-700
+        "
       >
         Something else here
       </a>
       <div class="h-0 my-2 border border-solid border-blueGray-100" />
       <a
         href="javascript:void(0);"
-        class="text-sm py-2 px-4 font-normal block w-full whitespace-nowrap bg-transparent text-blueGray-700"
+        class="
+          text-sm
+          py-2
+          px-4
+          font-normal
+          block
+          w-full
+          whitespace-nowrap
+          bg-transparent
+          text-blueGray-700
+        "
       >
         Seprated link
+      </a>
+      <a
+        href="javascript:void(0);"
+        class="
+          text-sm
+          py-2
+          px-4
+          font-normal
+          block
+          w-full
+          whitespace-nowrap
+          bg-transparent
+          text-blueGray-700
+        "
+        @click.prevent="runLogout"
+      >
+        Logout
       </a>
     </div>
   </div>
@@ -57,7 +134,7 @@
 
 <script>
 import { createPopper } from "@popperjs/core";
-
+import { mapActions } from "vuex";
 import image from "r@/assets/img/team-1-800x800.jpg";
 
 export default {
@@ -68,6 +145,12 @@ export default {
     };
   },
   methods: {
+    ...mapActions("auth", ["logout"]),
+    runLogout: function () {
+      this.logout().then((response) => {
+        this.$router.push("/admin/login");
+      });
+    },
     toggleDropdown: function (event) {
       event.preventDefault();
       if (this.dropdownPopoverShow) {
