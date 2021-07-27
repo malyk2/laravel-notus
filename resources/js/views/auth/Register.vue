@@ -107,7 +107,6 @@
                   v-model="form.name"
                   type="text"
                   class="
-                    border-0
                     px-3
                     py-3
                     placeholder-blueGray-300
@@ -123,8 +122,14 @@
                     transition-all
                     duration-150
                   "
+                  :class="[
+                    form.errors.has('name') ? 'border-red-500' : 'border-none',
+                  ]"
                   placeholder="Name"
                 />
+                <p v-if="form.errors.has('name')" class="text-red-500 text-xs">
+                  {{ form.errors.first("name") }}
+                </p>
               </div>
 
               <div class="relative w-full mb-3">
@@ -144,7 +149,6 @@
                   v-model="form.email"
                   type="email"
                   class="
-                    border-0
                     px-3
                     py-3
                     placeholder-blueGray-300
@@ -160,8 +164,14 @@
                     transition-all
                     duration-150
                   "
+                  :class="[
+                    form.errors.has('email') ? 'border-red-500' : 'border-none',
+                  ]"
                   placeholder="Email"
                 />
+                <p v-if="form.errors.has('email')" class="text-red-500 text-xs">
+                  {{ form.errors.first("email") }}
+                </p>
               </div>
 
               <div class="relative w-full mb-3">
@@ -181,7 +191,6 @@
                   v-model="form.password"
                   type="password"
                   class="
-                    border-0
                     px-3
                     py-3
                     placeholder-blueGray-300
@@ -197,8 +206,19 @@
                     transition-all
                     duration-150
                   "
+                  :class="[
+                    form.errors.has('password')
+                      ? 'border-red-500'
+                      : 'border-none',
+                  ]"
                   placeholder="Password"
                 />
+                <p
+                  v-if="form.errors.has('password')"
+                  class="text-red-500 text-xs"
+                >
+                  {{ form.errors.first("password") }}
+                </p>
               </div>
 
               <div>
