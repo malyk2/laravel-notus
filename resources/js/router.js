@@ -10,7 +10,7 @@ import Maps from './views/admin/Maps.vue'
 import Login from './views/auth/Login.vue'
 import PasswordForgot from './views/auth/PasswordForgot.vue'
 import PasswordReset from './views/auth/PasswordReset.vue'
-// import Register from './views/auth/Register.vue'
+import Register from './views/auth/Register.vue'
 // Index
 import Landing from "@/views/Landing.vue";
 import Profile from "@/views/Profile.vue";
@@ -73,10 +73,11 @@ const routes = [
         name: 'admin.password.reset',
         component: PasswordReset,
       },
-      // {
-      //   path: "/auth/register",
-      //   component: Register,
-      // },
+      {
+        path: "/admin/register",
+        name: 'admin.register',
+        component: Register,
+      },
     ],
   },
   {

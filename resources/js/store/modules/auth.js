@@ -23,6 +23,13 @@ const actions = {
       throw response
     })
   },
+  async logout({ commit }) {
+    await api.logout().then(response => {
+      commit('setMe', {})
+    }).catch(response => {
+      throw response
+    })
+  },
   async getMe({ commit }) {
     console.log('ACTION getMe');
     await api.getMe().then(response => {
