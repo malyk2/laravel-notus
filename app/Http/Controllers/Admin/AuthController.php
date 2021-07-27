@@ -37,7 +37,7 @@ class AuthController extends Controller
 
     public function logout(Request $request)
     {
-        auth('web')->logout();
+        Auth::guard('web')->logout();
         return response()->api(true);
     }
 
