@@ -23,6 +23,16 @@ const actions = {
       throw response
     })
   },
+  async verifyEmail({ commit }, data) {
+    await api
+      .verifyEmail(data.id, data.hash, data.query)
+      .then((response) => {
+        commit('setMe', response.data)
+      })
+      .catch((response) => {
+        throw response
+      });
+  },
   async logout({ commit }) {
     await api.logout().then(response => {
       commit('setMe', {})

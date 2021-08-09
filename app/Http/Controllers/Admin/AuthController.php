@@ -12,6 +12,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Password;
 use App\Http\Resources\Auth\Me as MeResource;
 use App\Http\Requests\Auth\Login as LoginRequest;
+use App\Exceptions\Api\Auth\InvalidSignatureException;
 use App\Http\Requests\Auth\Register as RegisterRequest;
 use Illuminate\Auth\Events\Registered as RegisteredEvent;
 use App\Http\Requests\Auth\PasswordReset as PasswordResetRequest;
@@ -81,6 +82,24 @@ class AuthController extends Controller
             ? response()->api(true, $status)
             : response()->api(false, $status, 403);
     }
+
+    public function verifyEmail(Request $request)
+    {
+        if (
+            !$request->hasValidSignature()
+            || !$user = User::find($request->id)
+        ) {
+            throw new InvalidSignatureException();
+        }
+        if (!$user->hasVerifiedEmail()) {
+            $user->markEmailAsVerified();
+            Auth::login($user);
+        }
+
+        response()->api(new MeResource($user), 'Email verified');
+    }
+
+
 
     public function me(Request $request)
     {

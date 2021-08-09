@@ -11,6 +11,7 @@ import Login from './views/auth/Login.vue'
 import PasswordForgot from './views/auth/PasswordForgot.vue'
 import PasswordReset from './views/auth/PasswordReset.vue'
 import Register from './views/auth/Register.vue'
+import VerifyEmail from './views/auth/VerifyEmail.vue'
 // Index
 import Landing from "@/views/Landing.vue";
 import Profile from "@/views/Profile.vue";
@@ -77,6 +78,11 @@ const routes = [
         path: "/admin/register",
         name: 'admin.register',
         component: Register,
+      },
+      {
+        path: "/admin/verify-email/:id/:hash",
+        name: 'admin.verify.verify',
+        component: VerifyEmail,
       },
     ],
   },

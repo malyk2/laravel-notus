@@ -18,7 +18,10 @@ const auth = {
   },
   resetPassword(data) {
     return new Request(data).post("/api/auth/password/reset");
-  }
+  },
+  verifyEmail(id, hash, query) {
+    return new Request().setParams(query).get("/api/auth/verify/" + id + "/" + hash);
+  },
 }
 
 export {
