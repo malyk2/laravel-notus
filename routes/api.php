@@ -22,7 +22,9 @@ Route::prefix('auth')->group(function () {
         Route::post('forgot', [AuthController::class, 'passwordForgot']);
         Route::post('reset', [AuthController::class, 'passwordReset']);
     });
-    Route::get('verify/{id}/{hash}', [AuthController::class, 'verifyEmail'])->name('api.verify.email');
+    Route::prefix('verify')->group(function () {
+        Route::get('{id}/{hash}', [AuthController::class, 'verifyEmail'])->name('api.verify.email');
+    });
     Route::middleware('auth:sanctum')->group(function () {
         Route::get('me', [AuthController::class, 'me']);
         Route::post('logout', [AuthController::class, 'logout']);

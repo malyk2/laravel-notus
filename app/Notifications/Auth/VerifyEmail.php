@@ -23,13 +23,8 @@ class VerifyEmail extends BaseNotification
         ];
         $apiUrl = URL::temporarySignedRoute(
             'api.verify.email',
-            // 'verification.verify',
             now()->addMinutes(config('auth.verification.expire', 60)),
             $params
-            // [
-            //     'id' => $id, $notifiable->getKey(),
-            //     'hash' => sha1($notifiable->getEmailForVerification()),
-            // ]
         );
 
         return str_replace(
