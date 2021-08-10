@@ -14,7 +14,7 @@ use App\Http\Resources\Auth\Me as MeResource;
 use App\Http\Requests\Auth\Login as LoginRequest;
 use App\Exceptions\Api\Auth\InvalidSignatureException;
 use App\Http\Requests\Auth\Register as RegisterRequest;
-use Illuminate\Auth\Events\Registered as RegisteredEvent;
+use App\Events\Admin\Auth\Registered as RegisteredEvent;
 use App\Http\Requests\Auth\PasswordReset as PasswordResetRequest;
 use App\Http\Requests\Auth\PasswordForgot as PasswordForgotRequest;
 
@@ -96,10 +96,8 @@ class AuthController extends Controller
             Auth::login($user);
         }
 
-        response()->api(new MeResource($user), 'Email verified');
+        return response()->api(new MeResource($user), 'Email verified');
     }
-
-
 
     public function me(Request $request)
     {

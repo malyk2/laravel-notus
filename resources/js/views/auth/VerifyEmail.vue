@@ -36,7 +36,6 @@
 <script>
 import { auth as api } from "@/api";
 import { mapMutations, mapState, mapActions } from "vuex";
-import Form from "@/libs/Form";
 import Alert from "@/components/Alerts/Alert";
 import BaseSpiner from "@/components/Spiners/BaseSpiner";
 export default {
@@ -51,17 +50,11 @@ export default {
     };
   },
   mounted() {
-    const query = this.$route.query;
-    const id = this.$route.params.id;
-    const hash = this.$route.params.hash;
-
-    console.log("query");
-    console.log(query);
-    console.log("id");
-    console.log(id);
-    console.log("hash");
-    console.log(hash);
-    verifyEmail(id, hash, query)
+    this.verifyEmail({
+      id: this.$route.params.id,
+      hash: this.$route.params.hash,
+      query: this.$route.query,
+    })
       .then((data) => {
         this.$router.push("/admin/dashboard");
       })
