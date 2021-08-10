@@ -20,7 +20,7 @@ abstract class TestCase extends BaseTestCase
      */
     protected function send(array $data = [])
     {
-        return $this->json('POST', $this->uri, $data);
+        return $this->json($this->method, $this->uri, $data);
     }
 
     /**
