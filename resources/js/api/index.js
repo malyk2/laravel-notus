@@ -7,6 +7,9 @@ const auth = {
   logout() {
     return new Request().post("/api/auth/logout");
   },
+  register(data) {
+    return new Request(data).post("/api/auth/register");
+  },
   getMe() {
     return new Request().get("/api/auth/me");
   },
@@ -15,7 +18,10 @@ const auth = {
   },
   resetPassword(data) {
     return new Request(data).post("/api/auth/password/reset");
-  }
+  },
+  verifyEmail(id, hash, query) {
+    return new Request().setParams(query).get("/api/auth/verify/" + id + "/" + hash);
+  },
 }
 
 export {

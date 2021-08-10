@@ -77,20 +77,23 @@ module.exports = {
       },
     },
   },
-  //   variants: [
-  //     "responsive",
-  //     "group-hover",
-  //     "focus-within",
-  //     "first",
-  //     "last",
-  //     "odd",
-  //     "even",
-  //     "hover",
-  //     "focus",
-  //     "active",
-  //     "visited",
-  //     "disabled",
-  //   ],
+  // variants: {
+  //   animation: ['responsive', 'motion-safe', 'motion-reduce']
+  // }
+
+  // "responsive",
+  // "group-hover",
+  // "focus-within",
+  // "first",
+  // "last",
+  // "odd",
+  // "even",
+  // "hover",
+  // "focus",
+  // "active",
+  // "visited",
+  // "disabled",
+  // ,
   plugins: [
     require("@tailwindcss/forms"),
   ]
