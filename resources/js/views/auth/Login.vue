@@ -3,24 +3,78 @@
     <div class="flex content-center items-center justify-center h-full">
       <div class="w-full lg:w-4/12 px-4">
         <div
-          class="relative flex flex-col min-w-0 break-words w-full mb-6 shadow-lg rounded-lg bg-blueGray-200 border-0"
+          class="
+            relative
+            flex flex-col
+            min-w-0
+            break-words
+            w-full
+            mb-6
+            shadow-lg
+            rounded-lg
+            bg-blueGray-200
+            border-0
+          "
         >
           <div class="rounded-t mb-0 px-6 py-6">
             <div class="text-center mb-3">
-              <h6 class="text-blueGray-500 text-sm font-bold">
-                Sign in with
-              </h6>
+              <h6 class="text-blueGray-500 text-sm font-bold">Sign in with</h6>
             </div>
+            <alert v-if="message.show" :type="message.type">
+              {{ message.text }}
+            </alert>
             <div class="btn-wrapper text-center">
               <button
-                class="bg-white active:bg-blueGray-50 text-blueGray-700 font-normal px-4 py-2 rounded outline-none focus:outline-none mr-2 mb-1 uppercase shadow hover:shadow-md inline-flex items-center font-bold text-xs ease-linear transition-all duration-150"
+                class="
+                  bg-white
+                  active:bg-blueGray-50
+                  text-blueGray-700
+                  px-4
+                  py-2
+                  rounded
+                  outline-none
+                  focus:outline-none
+                  mr-2
+                  mb-1
+                  uppercase
+                  shadow
+                  hover:shadow-md
+                  inline-flex
+                  items-center
+                  font-bold
+                  text-xs
+                  ease-linear
+                  transition-all
+                  duration-150
+                "
                 type="button"
               >
                 <img alt="..." class="w-5 mr-1" :src="github" />
                 Github
               </button>
               <button
-                class="bg-white active:bg-blueGray-50 text-blueGray-700 font-normal px-4 py-2 rounded outline-none focus:outline-none mr-1 mb-1 uppercase shadow hover:shadow-md inline-flex items-center font-bold text-xs ease-linear transition-all duration-150"
+                class="
+                  bg-white
+                  active:bg-blueGray-50
+                  text-blueGray-700
+                  px-4
+                  py-2
+                  rounded
+                  outline-none
+                  focus:outline-none
+                  mr-1
+                  mb-1
+                  uppercase
+                  shadow
+                  hover:shadow-md
+                  inline-flex
+                  items-center
+                  font-bold
+                  text-xs
+                  ease-linear
+                  transition-all
+                  duration-150
+                "
                 type="button"
               >
                 <img alt="..." class="w-5 mr-1" :src="google" />
@@ -33,40 +87,113 @@
             <div class="text-blueGray-400 text-center mb-3 font-bold">
               <small>Or sign in with credentials</small>
             </div>
-            <form>
+            <form @submit.prevent="signIn">
               <div class="relative w-full mb-3">
                 <label
-                  class="block uppercase text-blueGray-600 text-xs font-bold mb-2"
+                  class="
+                    block
+                    uppercase
+                    text-blueGray-600 text-xs
+                    font-bold
+                    mb-2
+                  "
                   htmlFor="grid-password"
                 >
                   Email
                 </label>
                 <input
                   type="email"
-                  class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
+                  class="
+                    px-3
+                    py-3
+                    placeholder-blueGray-300
+                    text-blueGray-600
+                    bg-white
+                    rounded
+                    text-sm
+                    shadow
+                    focus:outline-none
+                    focus:ring
+                    w-full
+                    ease-linear
+                    transition-all
+                    duration-150
+                  "
+                  :class="[
+                    form.errors.has('email') ? 'border-red-500' : 'border-none',
+                  ]"
                   placeholder="Email"
+                  v-model="form.email"
                 />
+                <p v-if="form.errors.has('email')" class="text-red-500 text-xs">
+                  {{ form.errors.first("email") }}
+                </p>
               </div>
 
               <div class="relative w-full mb-3">
                 <label
-                  class="block uppercase text-blueGray-600 text-xs font-bold mb-2"
+                  class="
+                    block
+                    uppercase
+                    text-blueGray-600 text-xs
+                    font-bold
+                    mb-2
+                  "
                   htmlFor="grid-password"
                 >
                   Password
                 </label>
                 <input
                   type="password"
-                  class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
+                  class="
+                    px-3
+                    py-3
+                    placeholder-blueGray-300
+                    text-blueGray-600
+                    bg-white
+                    rounded
+                    text-sm
+                    shadow
+                    focus:outline-none
+                    focus:ring
+                    w-full
+                    ease-linear
+                    transition-all
+                    duration-150
+                  "
+                  :class="[
+                    form.errors.has('password')
+                      ? 'border-red-500'
+                      : 'border-none',
+                  ]"
                   placeholder="Password"
+                  v-model="form.password"
                 />
+                <p
+                  v-if="form.errors.has('password')"
+                  class="text-red-500 text-xs"
+                >
+                  {{ form.errors.first("password") }}
+                </p>
               </div>
               <div>
                 <label class="inline-flex items-center cursor-pointer">
                   <input
                     id="customCheckLogin"
                     type="checkbox"
-                    class="form-checkbox border-0 rounded text-blueGray-700 ml-1 w-5 h-5 ease-linear transition-all duration-150"
+                    class="
+                      form-checkbox
+                      border-0
+                      rounded
+                      text-blueGray-700
+                      ml-1
+                      w-5
+                      h-5
+                      ease-linear
+                      transition-all
+                      duration-150
+                    "
+                    v-model="form.remember_me"
                   />
                   <span class="ml-2 text-sm font-semibold text-blueGray-600">
                     Remember me
@@ -76,8 +203,29 @@
 
               <div class="text-center mt-6">
                 <button
-                  class="bg-blueGray-800 text-white active:bg-blueGray-600 text-sm font-bold uppercase px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 w-full ease-linear transition-all duration-150"
-                  type="button"
+                  class="
+                    bg-blueGray-800
+                    text-white
+                    active:bg-blueGray-600
+                    text-sm
+                    font-bold
+                    uppercase
+                    px-6
+                    py-3
+                    rounded
+                    shadow
+                    hover:shadow-lg
+                    outline-none
+                    focus:outline-none
+                    mr-1
+                    mb-1
+                    w-full
+                    ease-linear
+                    transition-all
+                    duration-150
+                  "
+                  type="submit"
+                  :disabled="form.busy"
                 >
                   Sign In
                 </button>
@@ -87,12 +235,18 @@
         </div>
         <div class="flex flex-wrap mt-6 relative">
           <div class="w-1/2">
-            <a href="javascript:void(0)" class="text-blueGray-200">
+            <router-link
+              :to="{ name: 'admin.password.forgot' }"
+              class="text-blueGray-200"
+            >
               <small>Forgot password?</small>
-            </a>
+            </router-link>
           </div>
           <div class="w-1/2 text-right">
-            <router-link to="/auth/register" class="text-blueGray-200">
+            <router-link
+              :to="{ name: 'admin.register' }"
+              class="text-blueGray-200"
+            >
               <small>Create new account</small>
             </router-link>
           </div>
@@ -102,15 +256,58 @@
   </div>
 </template>
 <script>
+import { mapActions, mapMutations, mapState } from "vuex";
 import github from "r@/assets/img/github.svg";
 import google from "r@/assets/img/google.svg";
-
+import Form from "@/libs/Form";
+import Alert from "@/components/Alerts/Alert";
 export default {
+  components: {
+    Alert,
+  },
   data() {
     return {
+      form: new Form({
+        email: "",
+        password: "",
+        remember_me: false,
+      }),
       github,
       google,
     };
+  },
+  mounted() {},
+  computed: {
+    ...mapState({
+      message: (state) => state.auth.message,
+    }),
+  },
+  methods: {
+    ...mapMutations("auth", ["setMessage"]),
+    ...mapActions("auth", ["login"]),
+    signIn() {
+      this.form.errors.clear();
+      this.form.busy = true;
+      this.login(this.form.data())
+        .then((data) => {
+          this.form.onSuccess();
+          this.$router.push("/admin/dashboard");
+        })
+        .catch((response) => {
+          this.form.onFail(response.data.errors);
+          if (response.status == 422) {
+            this.setMessage({
+              show: false,
+            });
+          } else {
+            this.setMessage({
+              show: true,
+              text: response.data.message,
+              type: "danger",
+            });
+          }
+        });
+    },
   },
 };
 </script>
