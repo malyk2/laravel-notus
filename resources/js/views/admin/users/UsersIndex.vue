@@ -30,7 +30,10 @@
             <table-td> {{ user.email }} </table-td>
             <table-td> {{ user.created_at }} </table-td>
             <table-td>
-              <table-dropdown />
+              <table-dropdown>
+                <table-dropdown-link @click="gotoUserForm(user)"> Update </table-dropdown-link>
+                <table-dropdown-link @click="deleteUser(user)"> Delete </table-dropdown-link>
+              </table-dropdown>
             </table-td>
           </tr>
         </tbody>
@@ -42,11 +45,12 @@
   </div>
 </template>
 <script>
-import TableDropdown from "@/components/Dropdowns/TableDropdown.vue";
 
 import CardHeader from "@/components/Cards/CardHeader.vue";
 import TableTh from "@/components/Table/TableTh.vue";
 import TableTd from "@/components/Table/TableTd.vue";
+import TableDropdown from "@/components/Dropdowns/TableDropdown.vue";
+import TableDropdownLink from "@/components/Dropdowns/TableDropdownLink.vue";
 import PaginatorAdmin from "@/components/Paginators/PaginatorAdmin.vue";
 import { users as api } from "@/api";
 
@@ -61,6 +65,7 @@ export default {
   components: {
     CardHeader,
     TableDropdown,
+    TableDropdownLink,
     TableTh,
     TableTd,
     PaginatorAdmin,
@@ -74,6 +79,12 @@ export default {
         this.users = response.data;
         this.pagination = response.meta;
       });
+    },
+    gotoUserForm(user) {
+      console.log('gotoUserForm');
+    },
+    deleteUser(user) {
+      console.log('deleteUser');
     },
   },
   computed: {
