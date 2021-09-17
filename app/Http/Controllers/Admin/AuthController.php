@@ -2,21 +2,21 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Models\User;
-use Illuminate\Support\Arr;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Password;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Arr;
 use Illuminate\Http\Request;
 use App\Services\AuthService;
+use App\Models\User;
+use App\Http\Resources\Admin\Auth\Me as MeResource;
+use App\Http\Requests\Admin\Auth\Register as RegisterRequest;
+use App\Http\Requests\Admin\Auth\PasswordReset as PasswordResetRequest;
+use App\Http\Requests\Admin\Auth\PasswordForgot as PasswordForgotRequest;
+use App\Http\Requests\Admin\Auth\Login as LoginRequest;
 use App\Http\Controllers\Controller;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Password;
-use App\Http\Resources\Auth\Me as MeResource;
-use App\Http\Requests\Auth\Login as LoginRequest;
 use App\Exceptions\Api\Auth\InvalidSignatureException;
-use App\Http\Requests\Auth\Register as RegisterRequest;
 use App\Events\Admin\Auth\Registered as RegisteredEvent;
-use App\Http\Requests\Auth\PasswordReset as PasswordResetRequest;
-use App\Http\Requests\Auth\PasswordForgot as PasswordForgotRequest;
 
 class AuthController extends Controller
 {
