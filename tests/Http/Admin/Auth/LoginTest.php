@@ -1,18 +1,18 @@
 <?php
 
-namespace Tests\Http\Auth;
+namespace Tests\Http\Admin\Auth;
 
-use App\Models\User;
 use Tests\Http\TestCase;
 use Mockery\MockInterface;
-use App\Services\AuthService;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use App\Services\AuthService;
+use App\Models\User;
 
 class LoginTest extends TestCase
 {
     use RefreshDatabase;
 
-    protected $uri = 'api/auth/login';
+    protected $uri = 'api/admin/auth/login';
 
     protected $method = 'POST';
 

@@ -1,16 +1,16 @@
 <?php
 
-namespace Tests\Http\Auth;
+namespace Tests\Http\Admin\Auth;
 
-use App\Models\User;
 use Tests\Http\TestCase;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use App\Models\User;
 
 class MeTest extends TestCase
 {
     use RefreshDatabase;
 
-    protected $uri = 'api/auth/me';
+    protected $uri = 'api/admin/auth/me';
 
     protected $method = 'GET';
 
