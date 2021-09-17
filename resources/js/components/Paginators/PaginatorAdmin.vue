@@ -137,7 +137,7 @@
               text-emerald-500
             "
             @click.prevent="changePage(pagination.last_page)"
-            v-if="(pagination.last_page - pagination.current_page) > 1"
+            v-if="pagination.last_page - pagination.current_page > 1"
           >
             <i class="fas fa-chevron-right -mr-px"></i>
             <i class="fas fa-chevron-right -mr-px"></i>
@@ -158,7 +158,7 @@ export default {
     offset: {
       type: Number,
       default: 2,
-    }
+    },
   },
   computed: {
     pagesNumber() {
