@@ -1,20 +1,20 @@
 <?php
 
-namespace Tests\Http\Auth;
+namespace Tests\Http\Admin\Auth;
 
-use App\Models\User;
 use Tests\Http\TestCase;
 use Mockery\MockInterface;
 use Illuminate\Support\Str;
-use App\Services\AuthService;
 use Illuminate\Support\Facades\Event;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use App\Services\AuthService;
+use App\Models\User;
 
 class RegisterTest extends TestCase
 {
     use RefreshDatabase;
 
-    protected $uri = 'api/auth/register';
+    protected $uri = 'api/admin/auth/register';
 
     protected $method = 'POST';
 

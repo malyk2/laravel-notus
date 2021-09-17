@@ -1,16 +1,16 @@
 <?php
 
-namespace Tests\Http\Auth;
+namespace Tests\Http\Admin\Users;
 
-use App\Models\User;
 use Tests\Http\TestCase;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use App\Models\User;
 
-class MeTest extends TestCase
+class IndexTest extends TestCase
 {
     use RefreshDatabase;
 
-    protected $uri = 'api/auth/me';
+    protected $uri = 'api/admin/users';
 
     protected $method = 'GET';
 
@@ -19,7 +19,7 @@ class MeTest extends TestCase
      *
      * @return void
      */
-    public function noAuth()
+    public function authentication()
     {
         $response = $this->send();
         $response->assertStatus(401);
@@ -32,10 +32,11 @@ class MeTest extends TestCase
      */
     public function success()
     {
-        $response = $this->admin($user = User::factory()->create())->send();
+        User::factory()->count(2)->create();
 
-        $response
-            ->assertSuccessful()
-            ->assertJsonFragment(['id' => $user->id]);
+        $response = $this->admin()->send();
+
+        $response->assertStatus(200)
+            ->assertJsonCount(2, 'data');
     }
 }
