@@ -15,8 +15,8 @@
 
 <script>
 export default {
+  name: 'card-header',
   props: {
-    name: 'table-header',
     color: {
       default: "light",
       validator: function (value) {
