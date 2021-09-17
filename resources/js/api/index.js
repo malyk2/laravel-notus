@@ -24,6 +24,13 @@ const auth = {
   },
 }
 
+const users = {
+  index(query = {}) {
+    return new Request().setParams(query).get("/api/admin/users");
+  },
+}
+
 export {
   auth,
+  users,
 };

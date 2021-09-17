@@ -12,7 +12,7 @@
     "
     :class="[color === 'light' ? 'bg-white' : 'bg-emerald-900 text-white']"
   >
-    <card-header> Users test </card-header>
+    <card-header> Users </card-header>
     <div class="block w-full overflow-x-auto">
       <!-- Projects table -->
       <table class="items-center w-full bg-transparent border-collapse">
@@ -25,16 +25,19 @@
           </tr>
         </thead>
         <tbody>
-          <tr>
-            <table-td> 1 </table-td>
-            <table-td> 2 </table-td>
-            <table-td> 3 </table-td>
+          <tr v-for="user in users" :key="user.id">
+            <table-td> {{ user.name }} </table-td>
+            <table-td> {{ user.email }} </table-td>
+            <table-td> {{ user.created_at }} </table-td>
             <table-td>
               <table-dropdown />
             </table-td>
           </tr>
         </tbody>
       </table>
+      <div class="mx-auto">
+        <paginator-admin :pagination="pagination" @paginate="getUsers"/>
+      </div>
     </div>
   </div>
 </template>
@@ -44,11 +47,15 @@ import TableDropdown from "@/components/Dropdowns/TableDropdown.vue";
 import CardHeader from "@/components/Cards/CardHeader.vue";
 import TableTh from "@/components/Table/TableTh.vue";
 import TableTd from "@/components/Table/TableTd.vue";
+import PaginatorAdmin from "@/components/Paginators/PaginatorAdmin.vue";
+import { users as api } from "@/api";
 
 export default {
   data() {
     return {
-      color: 'light',
+      color: "light",
+      users: [],
+      pagination: {},
     };
   },
   components: {
@@ -56,15 +63,25 @@ export default {
     TableDropdown,
     TableTh,
     TableTd,
+    PaginatorAdmin,
   },
-  // props: {
-  //   color: {
-  //     default: "light",
-  //     validator: function (value) {
-  //       // The value must match one of these strings
-  //       return ["light", "dark"].indexOf(value) !== -1;
-  //     },
-  //   },
-  // },
+  mounted() {
+    this.getUsers();
+  },
+  methods: {
+    getUsers() {
+      api.index(this.userQuery).then((response) => {
+        this.users = response.data;
+        this.pagination = response.meta;
+      });
+    },
+  },
+  computed: {
+    userQuery() {
+      return {
+        page: this.pagination ? this.pagination.current_page : null,
+      }
+    }
+  }
 };
 </script>
