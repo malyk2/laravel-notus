@@ -4,145 +4,47 @@
       <h6 class="text-blueGray-700 text-xl font-bold">Create user</h6>
     </template>
     <form>
-      <h6 class="text-blueGray-400 text-sm mt-3 mb-6 font-bold uppercase">
-        User Information
-      </h6>
       <div class="flex flex-wrap">
         <div class="w-full lg:w-6/12 px-4">
-          <div class="relative w-full mb-3">
-            <label
-              class="block uppercase text-blueGray-600 text-xs font-bold mb-2"
-              htmlFor="grid-password"
-            >
-              Username
-            </label>
-            <input
-              type="text"
-              class="
-                border-0
-                px-3
-                py-3
-                placeholder-blueGray-300
-                text-blueGray-600
-                bg-white
-                rounded
-                text-sm
-                shadow
-                focus:outline-none
-                focus:ring
-                w-full
-                ease-linear
-                transition-all
-                duration-150
-              "
-              value="lucky.jesse"
-            />
-          </div>
+          <input-base label="Name" v-model="user.name" />
         </div>
         <div class="w-full lg:w-6/12 px-4">
-          <div class="relative w-full mb-3">
-            <label
-              class="block uppercase text-blueGray-600 text-xs font-bold mb-2"
-              htmlFor="grid-password"
-            >
-              Email address
-            </label>
-            <input
-              type="email"
-              class="
-                border-0
-                px-3
-                py-3
-                placeholder-blueGray-300
-                text-blueGray-600
-                bg-white
-                rounded
-                text-sm
-                shadow
-                focus:outline-none
-                focus:ring
-                w-full
-                ease-linear
-                transition-all
-                duration-150
-              "
-              value="jesse@example.com"
-            />
-          </div>
+          <input-base label="Email" v-model="user.email" />
         </div>
         <div class="w-full lg:w-6/12 px-4">
-          <div class="relative w-full mb-3">
-            <label
-              class="block uppercase text-blueGray-600 text-xs font-bold mb-2"
-              htmlFor="grid-password"
-            >
-              First Name
-            </label>
-            <input
-              type="text"
-              class="
-                border-0
-                px-3
-                py-3
-                placeholder-blueGray-300
-                text-blueGray-600
-                bg-white
-                rounded
-                text-sm
-                shadow
-                focus:outline-none
-                focus:ring
-                w-full
-                ease-linear
-                transition-all
-                duration-150
-              "
-              value="Lucky"
-            />
-          </div>
-        </div>
-        <div class="w-full lg:w-6/12 px-4">
-          <div class="relative w-full mb-3">
-            <label
-              class="block uppercase text-blueGray-600 text-xs font-bold mb-2"
-              htmlFor="grid-password"
-            >
-              Last Name
-            </label>
-            <input
-              type="text"
-              class="
-                border-0
-                px-3
-                py-3
-                placeholder-blueGray-300
-                text-blueGray-600
-                bg-white
-                rounded
-                text-sm
-                shadow
-                focus:outline-none
-                focus:ring
-                w-full
-                ease-linear
-                transition-all
-                duration-150
-              "
-              value="Jesse"
-            />
-          </div>
+          <input-base label="Password" v-model="password" />
         </div>
       </div>
+      <button
+        class="
+          bg-emerald-500
+          text-white
+          active:bg-emerald-600
+          font-bold
+          uppercase
+          text-xs
+          px-4
+          py-2
+          rounded
+          shadow
+          hover:shadow-md
+          outline-none
+          focus:outline-none
+          mr-1
+          ease-linear
+          transition-all
+          duration-150
+        "
+        type="button"
+      >
+        Settings
+      </button>
     </form>
   </card-base>
 </template>
 <script>
 import CardBase from "@/components/Cards/CardBase.vue";
-// import TableTh from "@/components/Table/TableTh.vue";
-// import TableTd from "@/components/Table/TableTd.vue";
-// import TableDropdown from "@/components/Dropdowns/TableDropdown.vue";
-// import TableDropdownLink from "@/components/Dropdowns/TableDropdownLink.vue";
-// import PaginatorAdmin from "@/components/Paginators/PaginatorAdmin.vue";
+import InputBase from "@/components/Inputs/InputBase.vue";
 import { users as api } from "@/api";
 
 export default {
@@ -155,16 +57,12 @@ export default {
   data() {
     return {
       user: {},
+      password: "",
     };
   },
   components: {
     CardBase,
-    // CardHeader,
-    // TableDropdown,
-    // TableDropdownLink,
-    // TableTh,
-    // TableTd,
-    // PaginatorAdmin,
+    InputBase,
   },
   mounted() {
     console.log(this.id);
