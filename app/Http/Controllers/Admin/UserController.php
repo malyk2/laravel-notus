@@ -36,4 +36,9 @@ class UserController extends Controller
 
         return response()->api(new DetailResouce($user));
     }
+
+    public function get(User $user, Request $request)
+    {
+        return response()->api(new DetailResouce($user));
+    }
 }

@@ -35,6 +35,7 @@ Route::prefix('admin')->group(function () {
         Route::prefix('users')->group(function () {
             Route::get('', [UserController::class, 'index']);
             Route::post('', [UserController::class, 'crete']);
+            Route::get('{user}', [UserController::class, 'get']);
         });
     });
 });
