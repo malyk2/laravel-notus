@@ -1,20 +1,33 @@
 <template>
-  <div
-    class="
-      relative
-      flex flex-col
-      min-w-0
-      break-words
-      w-full
-      mb-6
-      shadow-lg
-      rounded
-    "
-    :class="[color === 'light' ? 'bg-white' : 'bg-emerald-900 text-white']"
-  >
-    <card-header> Users </card-header>
+  <card-base>
+    <template v-slot:header>
+      <h6 class="text-blueGray-700 text-xl font-bold">Users</h6>
+      <button
+        class="
+          bg-emerald-500
+          text-white
+          active:bg-emerald-600
+          font-bold
+          uppercase
+          text-xs
+          px-4
+          py-2
+          rounded
+          shadow
+          hover:shadow-md
+            outline-none
+            focus:outline-none
+          mr-1
+          ease-linear
+          transition-all
+          duration-150
+        "
+        type="button"
+      >
+        Settings
+      </button>
+    </template>
     <div class="block w-full overflow-x-auto">
-      <!-- Projects table -->
       <table class="items-center w-full bg-transparent border-collapse">
         <thead>
           <tr>
@@ -31,22 +44,26 @@
             <table-td> {{ user.created_at }} </table-td>
             <table-td>
               <table-dropdown>
-                <table-dropdown-link @click="gotoUserForm(user)"> Update </table-dropdown-link>
-                <table-dropdown-link @click="deleteUser(user)"> Delete </table-dropdown-link>
+                <table-dropdown-link @click="gotoUserForm(user)">
+                  Update
+                </table-dropdown-link>
+                <table-dropdown-link @click="deleteUser(user)">
+                  Delete
+                </table-dropdown-link>
               </table-dropdown>
             </table-td>
           </tr>
         </tbody>
       </table>
       <div class="mx-auto">
-        <paginator-admin :pagination="pagination" @paginate="getUsers"/>
+        <paginator-admin :pagination="pagination" @paginate="getUsers" />
       </div>
     </div>
-  </div>
+  </card-base>
 </template>
 <script>
-
 import CardHeader from "@/components/Cards/CardHeader.vue";
+import CardBase from "@/components/Cards/CardBase.vue";
 import TableTh from "@/components/Table/TableTh.vue";
 import TableTd from "@/components/Table/TableTd.vue";
 import TableDropdown from "@/components/Dropdowns/TableDropdown.vue";
@@ -63,6 +80,7 @@ export default {
     };
   },
   components: {
+    CardBase,
     CardHeader,
     TableDropdown,
     TableDropdownLink,
@@ -81,18 +99,18 @@ export default {
       });
     },
     gotoUserForm(user) {
-      console.log('gotoUserForm');
+      console.log("gotoUserForm");
     },
     deleteUser(user) {
-      console.log('deleteUser');
+      console.log("deleteUser");
     },
   },
   computed: {
     userQuery() {
       return {
         page: this.pagination ? this.pagination.current_page : null,
-      }
-    }
-  }
+      };
+    },
+  },
 };
 </script>
