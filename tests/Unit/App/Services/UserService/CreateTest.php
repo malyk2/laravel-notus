@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Unit\App\Services\AuthService;
+namespace Tests\Unit\App\Services\UserService;
 
 use Tests\Unit\TestCase;
 use Illuminate\Support\Facades\Hash;
