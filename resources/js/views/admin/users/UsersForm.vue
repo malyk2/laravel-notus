@@ -43,7 +43,7 @@ export default {
   props: {
     id: {
       default: null,
-      type: Number,
+      type: String,
     },
   },
   data() {
@@ -61,23 +61,38 @@ export default {
     ButtonBase,
   },
   mounted() {
-    console.log(this.id);
-    // this.getUsers();
+    if(this.id) {
+      if(this.id*1 == this.id) {
+        console.log('number');
+        api.get(this.id).then(response => {
+          this.form.addParam({
+            name: data.name,
+            email: data.email,
+          })
+        }).catch(response => this.goToList())
+      } else {
+        this.goToList();
+      }
+    }
   },
   methods: {
     save() {
       this.form.errors.clear();
       this.form.busy = true;
-      api
-        .create(this.form.data())
+      const request = !this.id ? api.create(this.form.data()) : api.update(this.id, this.form.data())
+      request
         .then((response) => {
-          this.$router.push({ name: "admin.users.index" });
+          this.goToList();
         })
         .catch((response) => {
           this.form.onFail(response.data.errors);
         });
     },
+    goToList() {
+      this.$router.push({ name: "admin.users.index" });
+    }
   },
+
   computed: {},
 };
 </script>

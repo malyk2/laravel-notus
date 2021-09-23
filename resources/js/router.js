@@ -52,6 +52,13 @@ const routes = [
         meta: { middleware: [new AuthMiddleware()] },
       },
       {
+        path: "/admin/users/:id",
+        name: "admin.users.edit",
+        component: UsersForm,
+        props: true,
+        meta: { middleware: [new AuthMiddleware()] },
+      },
+      {
         path: "/admin/settings",
         component: Settings,
       },

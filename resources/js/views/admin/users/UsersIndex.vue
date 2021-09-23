@@ -73,9 +73,9 @@ export default {
     this.getUsers();
   },
   methods: {
-    test() {
-      console.log("sclick");
-    },
+    // test() {
+    //   console.log("sclick");
+    // },
     getUsers() {
       api.index(this.userQuery).then((response) => {
         this.users = response.data;
@@ -83,7 +83,7 @@ export default {
       });
     },
     gotoUserForm(user) {
-      console.log("gotoUserForm");
+      this.$router.push({name:'admin.users.edit', params:{id: user.id}})
     },
     deleteUser(user) {
       console.log("deleteUser");
