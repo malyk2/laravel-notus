@@ -7,6 +7,7 @@ use App\Services\UserService;
 use App\Models\User;
 use App\Http\Resources\Admin\User\ListItem as ListItemResouce;
 use App\Http\Resources\Admin\User\Detail as DetailResouce;
+use App\Http\Requests\Admin\User\Update as UserUpdateRequest;
 use App\Http\Requests\Admin\User\Create as UserCreateRequest;
 use App\Http\Controllers\Controller;
 
@@ -33,6 +34,14 @@ class UserController extends Controller
     public function create(UserCreateRequest $request)
     {
         $user = $this->userService->create($request->validated());
+
+        return response()->api(new DetailResouce($user));
+    }
+
+    public function update(User $user, UserUpdateRequest $request)
+    {
+        logger($request->validated());
+        $user = $this->userService->update($user, $request->validated());
 
         return response()->api(new DetailResouce($user));
     }

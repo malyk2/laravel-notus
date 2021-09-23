@@ -21,4 +21,22 @@ class UserService
 
         return $user;
     }
+
+    /**
+     * Update user
+     *
+     * @param User $user
+     * @param array $data
+     * @return User
+     */
+    public function update(User $user, array $data)
+    {
+        $user->fill(Arr::only($data, ['name', 'email']));
+        if($password = Arr::get($data, 'password')) {
+            $user->password = bcrypt($password);
+        }
+        $user->save();
+
+        return $user;
+    }
 }
