@@ -31,6 +31,11 @@ class UpdateTest extends TestCase
 
         $this->assertInstanceOf(User::class, $result);
         $this->assertTrue(Hash::check('secret', $result->password));
+        $this->assertDatabaseHas('users', [
+            'id' => $user->id,
+            'name' => 'some name',
+            'email' => 'some email',
+        ]);
     }
 
     /**
@@ -51,5 +56,10 @@ class UpdateTest extends TestCase
 
         $this->assertInstanceOf(User::class, $result);
         $this->assertTrue(Hash::check('not-secret', $result->password));
+        $this->assertDatabaseHas('users', [
+            'id' => $user->id,
+            'name' => 'some name',
+            'email' => 'some email',
+        ]);
     }
 }

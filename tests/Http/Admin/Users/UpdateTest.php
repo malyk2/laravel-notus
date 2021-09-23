@@ -7,6 +7,7 @@ use Mockery\MockInterface;
 use Illuminate\Support\Str;
 use Illuminate\Support\Arr;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use App\Services\UserService;
 use App\Models\User;
 
 class UpdateTest extends TestCase
@@ -82,10 +83,11 @@ class UpdateTest extends TestCase
             'name' => 'name',
             'email' => 'some@email.com',
         ];
+        $this->mock(UserService::class, fn (MockInterface $mock) =>
+            $mock->shouldReceive('update')->once()->andReturn($this->user));
 
         $response = $this->admin()->send($data);
 
         $response->assertSuccessful();
-        $this->assertDatabaseHas('users', array_merge(['id' => $this->user->id], Arr::only($data, ['name', 'email'])));
     }
 }

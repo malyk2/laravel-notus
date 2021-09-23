@@ -7,6 +7,7 @@ use Mockery\MockInterface;
 use Illuminate\Support\Str;
 use Illuminate\Support\Arr;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use App\Services\UserService;
 use App\Models\User;
 
 class CreateTest extends TestCase
@@ -76,10 +77,13 @@ class CreateTest extends TestCase
             'email' => 'some@email.com',
             'password' => 'secret',
         ];
+        $user = User::factory()->create();
+
+        $this->mock(UserService::class, fn (MockInterface $mock) =>
+            $mock->shouldReceive('create')->once()->with($data)->andReturn($user));
 
         $response = $this->admin()->send($data);
 
         $response->assertSuccessful();
-        $this->assertDatabaseHas('users', Arr::only($data, ['name', 'email']));
     }
 }
