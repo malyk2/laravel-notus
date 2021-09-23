@@ -7,6 +7,7 @@ use Mockery\MockInterface;
 use Illuminate\Support\Str;
 use Illuminate\Support\Arr;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use App\Models\User;
 
 class CreateTest extends TestCase
 {
@@ -49,6 +50,19 @@ class CreateTest extends TestCase
             ['password required' => ['name' => 'name', 'email' => 'some@email.com', 'password' => '']],
         ];
     }
+
+    /**
+     * @test
+     *
+        * @return void
+        */
+        public function validateUniqueEmail()
+        {
+            $exists = User::factory()->create();
+            $response = $this->admin()->send(['name' => 'some name', 'email' => $exists->email, 'password' => 'secret']);
+
+            $response->assertStatus(422);
+        }
 
     /**
      * @test
