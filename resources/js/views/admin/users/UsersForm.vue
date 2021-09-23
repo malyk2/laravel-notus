@@ -6,16 +6,29 @@
     <form @submit.prevent="save">
       <div class="flex flex-wrap">
         <div class="w-full lg:w-6/12 px-4">
-          <input-base label="Name" v-model="form.name" />
+          <input-base
+            label="Name"
+            v-model="form.name"
+            :error="form.errors.first('name')"
+          />
         </div>
         <div class="w-full lg:w-6/12 px-4">
-          <input-base label="Email" v-model="form.email" />
+          <input-base
+            label="Email"
+            v-model="form.email"
+            :error="form.errors.first('email')"
+          />
         </div>
         <div class="w-full lg:w-6/12 px-4">
-          <input-base label="Password" v-model="form.password" />
+          <input-base
+            label="Password"
+            v-model="form.password"
+            type="password"
+            :error="form.errors.first('password')"
+          />
         </div>
       </div>
-      <button-base type="submit">Save</button-base>
+      <button-base type="submit" :disabled="form.busy">Save</button-base>
     </form>
   </card-base>
 </template>
@@ -55,27 +68,16 @@ export default {
     save() {
       this.form.errors.clear();
       this.form.busy = true;
-      console.log(this.form.data());
-    },
-    getUsers() {
-      api.index(this.userQuery).then((response) => {
-        this.users = response.data;
-        this.pagination = response.meta;
-      });
-    },
-    gotoUserForm(user) {
-      console.log("gotoUserForm");
-    },
-    deleteUser(user) {
-      console.log("deleteUser");
+      api
+        .create(this.form.data())
+        .then((response) => {
+          this.$router.push({ name: "admin.users.index" });
+        })
+        .catch((response) => {
+          this.form.onFail(response.data.errors);
+        });
     },
   },
-  computed: {
-    userQuery() {
-      return {
-        page: this.pagination ? this.pagination.current_page : null,
-      };
-    },
-  },
+  computed: {},
 };
 </script>

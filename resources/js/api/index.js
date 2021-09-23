@@ -28,6 +28,9 @@ const users = {
   index(query = {}) {
     return new Request().setParams(query).get("/api/admin/users");
   },
+  create(data) {
+    return new Request(data).post("/api/admin/users");
+  },
 }
 
 export {

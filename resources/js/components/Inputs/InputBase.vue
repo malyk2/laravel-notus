@@ -29,6 +29,12 @@
       :value="modelValue"
       @input="$emit('update:modelValue', $event.target.value)"
     />
+    <p
+      v-if="error"
+      class="text-red-500 text-xs"
+    >
+      {{ error }}
+    </p>
   </div>
 </template>
 <script>
@@ -46,6 +52,10 @@ export default {
         // The value must match one of these strings
         return ["text", "password"].indexOf(value) !== -1;
       },
+    },
+    error: {
+      default: "",
+      type: String,
     },
     modelValue: {
       default: "",
