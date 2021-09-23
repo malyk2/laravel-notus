@@ -18,6 +18,7 @@ import Profile from "@/views/Profile.vue";
 import Index from './views/Index.vue'
 // Users
 import UsersIndex from './views/admin/users/UsersIndex.vue'
+import UsersForm from './views/admin/users/UsersForm.vue'
 // middlewares
 import { Auth as AuthMiddleware } from '@/middlewares/Auth'
 
@@ -41,6 +42,13 @@ const routes = [
         path: "/admin/users",
         name: "admin.users.index",
         component: UsersIndex,
+        meta: { middleware: [new AuthMiddleware()] },
+      },
+      {
+        path: "/admin/users/create",
+        name: "admin.users.create",
+        component: UsersForm,
+        props: {'id': null},
         meta: { middleware: [new AuthMiddleware()] },
       },
       {

@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Password;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Arr;
 use Illuminate\Http\Request;
+use App\Services\UserService;
 use App\Services\AuthService;
 use App\Models\User;
 use App\Http\Resources\Admin\Auth\Me as MeResource;
@@ -21,10 +22,12 @@ use App\Events\Admin\Auth\Registered as RegisteredEvent;
 class AuthController extends Controller
 {
     protected $authService;
+    protected $userService;
 
-    public function __construct(AuthService $authService)
+    public function __construct(AuthService $authService, UserService $userService)
     {
         $this->authService = $authService;
+        $this->userService = $userService;
     }
 
     public function login(LoginRequest $request)
@@ -41,9 +44,7 @@ class AuthController extends Controller
 
     public function register(RegisterRequest $request)
     {
-        $data = $request->validated();
-        $data['password'] = bcrypt($data['password']);
-        $user = User::create($data);
+        $user = $this->userService->create($request->validated());
 
         event(new RegisteredEvent($user));
 
