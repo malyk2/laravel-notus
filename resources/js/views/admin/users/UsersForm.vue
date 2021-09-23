@@ -3,49 +3,28 @@
     <template v-slot:header>
       <h6 class="text-blueGray-700 text-xl font-bold">Create user</h6>
     </template>
-    <form>
+    <form @submit.prevent="save">
       <div class="flex flex-wrap">
         <div class="w-full lg:w-6/12 px-4">
-          <input-base label="Name" v-model="user.name" />
+          <input-base label="Name" v-model="form.name" />
         </div>
         <div class="w-full lg:w-6/12 px-4">
-          <input-base label="Email" v-model="user.email" />
+          <input-base label="Email" v-model="form.email" />
         </div>
         <div class="w-full lg:w-6/12 px-4">
-          <input-base label="Password" v-model="password" />
+          <input-base label="Password" v-model="form.password" />
         </div>
       </div>
-      <button
-        class="
-          bg-emerald-500
-          text-white
-          active:bg-emerald-600
-          font-bold
-          uppercase
-          text-xs
-          px-4
-          py-2
-          rounded
-          shadow
-          hover:shadow-md
-          outline-none
-          focus:outline-none
-          mr-1
-          ease-linear
-          transition-all
-          duration-150
-        "
-        type="button"
-      >
-        Settings
-      </button>
+      <button-base type="submit">Save</button-base>
     </form>
   </card-base>
 </template>
 <script>
 import CardBase from "@/components/Cards/CardBase.vue";
 import InputBase from "@/components/Inputs/InputBase.vue";
+import ButtonBase from "@/components/Buttons/ButtonBase.vue";
 import { users as api } from "@/api";
+import Form from "@/libs/Form";
 
 export default {
   props: {
@@ -56,19 +35,28 @@ export default {
   },
   data() {
     return {
-      user: {},
-      password: "",
+      form: new Form({
+        name: "",
+        email: "",
+        password: "",
+      }),
     };
   },
   components: {
     CardBase,
     InputBase,
+    ButtonBase,
   },
   mounted() {
     console.log(this.id);
     // this.getUsers();
   },
   methods: {
+    save() {
+      this.form.errors.clear();
+      this.form.busy = true;
+      console.log(this.form.data());
+    },
     getUsers() {
       api.index(this.userQuery).then((response) => {
         this.users = response.data;

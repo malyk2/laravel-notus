@@ -2,30 +2,9 @@
   <card-base>
     <template v-slot:header>
       <h6 class="text-blueGray-700 text-xl font-bold">Users</h6>
-      <button
-        class="
-          bg-emerald-500
-          text-white
-          active:bg-emerald-600
-          font-bold
-          uppercase
-          text-xs
-          px-4
-          py-2
-          rounded
-          shadow
-          hover:shadow-md
-            outline-none
-            focus:outline-none
-          mr-1
-          ease-linear
-          transition-all
-          duration-150
-        "
-        type="button"
-      >
-        Settings
-      </button>
+      <router-link :to="{ name: 'admin.users.create' }">
+        <button-base>Create</button-base>
+      </router-link>
     </template>
     <div class="block w-full overflow-x-auto">
       <table class="items-center w-full bg-transparent border-collapse">
@@ -64,6 +43,7 @@
 <script>
 import CardHeader from "@/components/Cards/CardHeader.vue";
 import CardBase from "@/components/Cards/CardBase.vue";
+import ButtonBase from "@/components/Buttons/ButtonBase.vue";
 import TableTh from "@/components/Table/TableTh.vue";
 import TableTd from "@/components/Table/TableTd.vue";
 import TableDropdown from "@/components/Dropdowns/TableDropdown.vue";
@@ -82,6 +62,7 @@ export default {
   components: {
     CardBase,
     CardHeader,
+    ButtonBase,
     TableDropdown,
     TableDropdownLink,
     TableTh,
@@ -92,6 +73,9 @@ export default {
     this.getUsers();
   },
   methods: {
+    test() {
+      console.log("sclick");
+    },
     getUsers() {
       api.index(this.userQuery).then((response) => {
         this.users = response.data;
