@@ -1,7 +1,7 @@
 <template>
   <card-base>
     <template v-slot:header>
-      <h6 class="text-blueGray-700 text-xl font-bold">Create user</h6>
+      <h6 class="text-blueGray-700 text-xl font-bold">{{ id ? 'Update' : 'Create' }} user</h6>
     </template>
     <form @submit.prevent="save">
       <div class="flex flex-wrap">
@@ -65,11 +65,15 @@ export default {
       if(this.id*1 == this.id) {
         console.log('number');
         api.get(this.id).then(response => {
+          const data = response.data;
           this.form.addParam({
             name: data.name,
             email: data.email,
           })
-        }).catch(response => this.goToList())
+        }).catch(response => {
+          console.log(response);
+          this.goToList();
+        })
       } else {
         this.goToList();
       }
@@ -79,7 +83,16 @@ export default {
     save() {
       this.form.errors.clear();
       this.form.busy = true;
-      const request = !this.id ? api.create(this.form.data()) : api.update(this.id, this.form.data())
+      const data = this.form.data();
+      let request;
+      if(!this.id) {
+        request = api.create(data)
+      } else {
+        if (!data.password) {
+          delete data.password;
+        }
+        request = api.update(this.id, data)
+      }
       request
         .then((response) => {
           this.goToList();
