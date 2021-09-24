@@ -40,10 +40,14 @@ class UserController extends Controller
 
     public function update(User $user, UserUpdateRequest $request)
     {
-        logger($request->validated());
         $user = $this->userService->update($user, $request->validated());
 
         return response()->api(new DetailResouce($user));
+    }
+
+    public function delete(User $user, Request $request)
+    {
+        return response()->api($this->userService->delete($user), 'User deleted');
     }
 
     public function get(User $user, Request $request)
