@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Resources\Auth;
+namespace App\Http\Resources\Admin\User;
 
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class Me extends JsonResource
+class Detail extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -16,7 +16,9 @@ class Me extends JsonResource
     {
         return [
             'id' => $this->id,
+            'name' => $this->name,
             'email' => $this->email,
+            'created_at' => $this->created_at->toDateTimeString(),
         ];
     }
 }

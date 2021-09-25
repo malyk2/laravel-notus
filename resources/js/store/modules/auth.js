@@ -41,7 +41,6 @@ const actions = {
     })
   },
   async getMe({ commit }) {
-    console.log('ACTION getMe');
     await api.getMe().then(response => {
       commit('setMe', response.data)
     }).catch(response => {
