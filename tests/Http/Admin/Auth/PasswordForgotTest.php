@@ -1,19 +1,19 @@
 <?php
 
-namespace Tests\Http\Auth;
+namespace Tests\Http\Admin\Auth;
 
-use App\Models\User;
 use Tests\Http\TestCase;
 use Illuminate\Support\Facades\Password;
 use Illuminate\Support\Facades\Notification;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use App\Notifications\Auth\ResetPassword as ResetPasswordNotification;
+use App\Models\User;
 
 class PasswordForgotTest extends TestCase
 {
     use RefreshDatabase;
 
-    protected $uri = 'api/auth/password/forgot';
+    protected $uri = 'api/admin/auth/password/forgot';
 
     protected $method = 'POST';
 

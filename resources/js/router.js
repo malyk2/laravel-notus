@@ -16,6 +16,9 @@ import VerifyEmail from './views/auth/VerifyEmail.vue'
 import Landing from "@/views/Landing.vue";
 import Profile from "@/views/Profile.vue";
 import Index from './views/Index.vue'
+// Users
+import UsersIndex from './views/admin/users/UsersIndex.vue'
+import UsersForm from './views/admin/users/UsersForm.vue'
 // middlewares
 import { Auth as AuthMiddleware } from '@/middlewares/Auth'
 
@@ -33,6 +36,26 @@ const routes = [
         path: "/admin/dashboard",
         name: "admin.dashboard",
         component: Dashboard,
+        meta: { middleware: [new AuthMiddleware()] },
+      },
+      {
+        path: "/admin/users",
+        name: "admin.users.index",
+        component: UsersIndex,
+        meta: { middleware: [new AuthMiddleware()] },
+      },
+      {
+        path: "/admin/users/create",
+        name: "admin.users.create",
+        component: UsersForm,
+        props: {'id': null},
+        meta: { middleware: [new AuthMiddleware()] },
+      },
+      {
+        path: "/admin/users/:id",
+        name: "admin.users.edit",
+        component: UsersForm,
+        props: true,
         meta: { middleware: [new AuthMiddleware()] },
       },
       {
