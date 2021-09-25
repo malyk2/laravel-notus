@@ -31,6 +31,15 @@ const users = {
   create(data) {
     return new Request(data).post("/api/admin/users");
   },
+  get(id) {
+    return new Request().get("/api/admin/users/"+id);
+  },
+  update(id, data) {
+    return new Request(data).post("/api/admin/users/"+id);
+  },
+  delete(id) {
+    return new Request().delete("/api/admin/users/"+id);
+  },
 }
 
 export {

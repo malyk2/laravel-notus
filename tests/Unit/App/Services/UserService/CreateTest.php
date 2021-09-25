@@ -30,5 +30,10 @@ class CreateTest extends TestCase
 
         $this->assertInstanceOf(User::class, $result);
         $this->assertTrue(Hash::check('secret', $result->password));
+        $this->assertDatabaseHas('users', [
+            'id' => $result->id,
+            'name' => 'some name',
+            'email' => 'some email',
+        ]);
     }
 }

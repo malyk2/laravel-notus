@@ -10,13 +10,21 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 use App\Services\UserService;
 use App\Models\User;
 
-class CreateTest extends TestCase
+class UpdateTest extends TestCase
 {
     use RefreshDatabase;
 
-    protected $uri = 'api/admin/users';
-
     protected $method = 'POST';
+
+    protected $user;
+
+    public function setUp(): void
+    {
+        parent::setUp();
+
+        $this->user = User::factory()->create();
+        $this->uri = 'api/admin/users/' . $this->user->id;
+    }
 
     /**
      * @test
@@ -48,22 +56,21 @@ class CreateTest extends TestCase
             ['name max' => ['name' => Str::random(256), 'email' => 'some@email.com', 'password' => 'some password']],
             ['email required' => ['name' => 'name', 'email' => '', 'password' => 'some password']],
             ['email email' => ['name' => 'name', 'email' => 'not email', 'password' => 'some password']],
-            ['password required' => ['name' => 'name', 'email' => 'some@email.com', 'password' => '']],
         ];
     }
 
     /**
      * @test
      *
-        * @return void
-        */
-        public function validateUniqueEmail()
-        {
-            $exists = User::factory()->create();
-            $response = $this->admin()->send(['name' => 'some name', 'email' => $exists->email, 'password' => 'secret']);
+     * @return void
+     */
+    public function validateUniqueEmail()
+    {
+        $exists = User::factory()->create();
+        $response = $this->admin()->send(['name' => 'some name', 'email' => $exists->email, 'password' => 'secret']);
 
-            $response->assertStatus(422);
-        }
+        $response->assertStatus(422);
+    }
 
     /**
      * @test
@@ -75,12 +82,9 @@ class CreateTest extends TestCase
         $data = [
             'name' => 'name',
             'email' => 'some@email.com',
-            'password' => 'secret',
         ];
-        $user = User::factory()->create();
-
         $this->mock(UserService::class, fn (MockInterface $mock) =>
-            $mock->shouldReceive('create')->once()->with($data)->andReturn($user));
+            $mock->shouldReceive('update')->once()->andReturn($this->user));
 
         $response = $this->admin()->send($data);
 

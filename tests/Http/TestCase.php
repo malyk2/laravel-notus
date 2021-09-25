@@ -2,9 +2,9 @@
 
 namespace Tests\Http;
 
-use App\Models\User;
-use Laravel\Sanctum\Sanctum;
 use Tests\TestCase as BaseTestCase;
+use Laravel\Sanctum\Sanctum;
+use App\Models\User;
 
 abstract class TestCase extends BaseTestCase
 {
