@@ -3,7 +3,6 @@
 namespace Tests\Http;
 
 use Tests\TestCase as BaseTestCase;
-use Mockery;
 use Laravel\Sanctum\Sanctum;
 use App\Models\User;
 
@@ -38,13 +37,4 @@ abstract class TestCase extends BaseTestCase
         // Sanctum::actingAs($user);
         return $this;
     }
-
-    // /**
-    //  * @inheritdoc
-    //  * */
-    // public function tearDown(): void
-    // {
-    //     Mockery::close();
-    //     parent::tearDown();
-    // }
 }
