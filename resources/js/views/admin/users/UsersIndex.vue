@@ -73,9 +73,6 @@ export default {
     this.getUsers();
   },
   methods: {
-    // test() {
-    //   console.log("sclick");
-    // },
     getUsers() {
       api.index(this.userQuery).then((response) => {
         this.users = response.data;
@@ -86,7 +83,12 @@ export default {
       this.$router.push({name:'admin.users.edit', params:{id: user.id}})
     },
     deleteUser(user) {
-      console.log("deleteUser");
+      api.delete(user.id).then(response => {
+        const index = this.users.findIndex(i => i.id == user.id);
+        if (index > -1) {
+          this.users.splice(index, 1);
+        }
+      })
     },
   },
   computed: {

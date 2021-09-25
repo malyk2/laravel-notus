@@ -37,6 +37,9 @@ const users = {
   update(id, data) {
     return new Request(data).post("/api/admin/users/"+id);
   },
+  delete(id) {
+    return new Request().delete("/api/admin/users/"+id);
+  },
 }
 
 export {
