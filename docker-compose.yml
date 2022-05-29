@@ -11,10 +11,24 @@ services:
     ports:
       - "80:80"
       - "3000:3000"
+    depends_on:
+      - database
     links:
+      - database
       - mailhog
+  database:
+    image: postgres:14-alpine
+    environment:
+      - "POSTGRES_PASSWORD=${DB_PASSWORD}"
+      - "POSTGRES_DB=db"
+    ports:
+      - "54321:5432"
+    volumes:
+      - notus_pgdata:/var/lib/postgresql/data/
 
   mailhog:
     image: mailhog/mailhog
     ports:
       - "8025:8025"
+volumes:
+  notus_pgdata:
