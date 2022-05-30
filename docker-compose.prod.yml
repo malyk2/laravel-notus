@@ -7,7 +7,7 @@ services:
     restart: always
     env_file: .env
     environment:
-      - "VIRTUAL_HOST=notus.jobsuf.tk"
+      - "VIRTUAL_HOST=${PROJECT_DOMAIN}"
       - "VIRTUAL_PROTO=http"
       - "HTTPS_METHOD=nohttps"
     depends_on:
