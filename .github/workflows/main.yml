@@ -35,7 +35,7 @@ jobs:
         uses: docker/build-push-action@v3
         with:
           context: .
-          file: ./deploy/prod/app.docker
+          file: ./docker/prod/app.docker
           outputs: type=docker,dest=/tmp/myimage.tar
           tags: ${{ secrets.REGISTRY }}/${{ secrets.REGISTRY_IMAGE }}:latest
           cache-from: type=registry,ref=${{ secrets.REGISTRY }}/${{ secrets.REGISTRY_IMAGE }}:buildcache
