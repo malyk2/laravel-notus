@@ -1,0 +1,33 @@
+version: '3.1'
+
+services:
+  app:
+    image: 'own-registry.tk/notus:latest'
+    container_name: notus_app
+    restart: always
+    env_file: .env
+    environment:
+      - "VIRTUAL_HOST=${PROJECT_DOMAIN}"
+      - "VIRTUAL_PROTO=http"
+      - "HTTPS_METHOD=nohttps"
+    depends_on:
+      - database
+    links:
+      - database
+  database:
+    image: postgres:14-alpine
+    container_name: notus_database
+    restart: always
+    environment:
+      - "POSTGRES_PASSWORD=${DB_PASSWORD}"
+      - "POSTGRES_DB=db"
+    volumes:
+      - notus_pgdata:/var/lib/postgresql/data/
+
+volumes:
+  notus_pgdata:
+
+networks:
+  default:
+    external:
+      name: nginx-proxy
